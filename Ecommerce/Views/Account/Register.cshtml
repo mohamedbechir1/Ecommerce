@@ -1,0 +1,64 @@
+﻿<div class="container mt-5">
+    <div class="card shadow-lg p-4" style="max-width: 400px; margin: auto; border-radius: 10px; border: none;">
+        <h2 class="text-center mb-4 text-success">Register</h2>
+        <form method="post" action="/Account/Register">
+            <div class="mb-3">
+                <label for="name" class="form-label fw-bold">Name</label>
+                <input type="text" class="form-control form-control-lg" id="name" name="Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label fw-bold">Email</label>
+                <input type="email" class="form-control form-control-lg" id="email" name="Email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label fw-bold">Password</label>
+                <input type="password" class="form-control form-control-lg" id="password" name="Password" required>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg w-100 mt-3">Register</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    }
+
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+
+    .form-label {
+        color: #495057;
+    }
+
+    .form-control {
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+            border-color: #28a745;
+        }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+        }
+</style>

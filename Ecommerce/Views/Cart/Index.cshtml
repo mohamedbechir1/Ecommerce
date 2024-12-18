@@ -1,0 +1,147 @@
+﻿@model List<Cart>
+
+<h2>Panier d'Achat</h2>
+
+@if (Model.Count == 0)
+{
+    <p>Votre panier est vide.</p>
+}
+else
+{
+    <table class="table cart-table">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>
+                        <form method="post" asp-action="UpdateCart">
+                            <input type="number" name="quantity" value="@item.Quantity" class="quantity-input" />
+                            <input type="hidden" name="cartItemId" value="@item.Id" />
+                            <button type="submit" class="btn btn-update">Mettre à jour</button>
+                        </form>
+                    </td>
+                    <td>@item.Product.Price $</td>
+                    <td>@(item.Product.Price * item.Quantity) $</td>
+                    <td>
+                        <form method="post" asp-action="RemoveFromCart">
+                            <input type="hidden" name="cartItemId" value="@item.Id" />
+                            <button type="submit" class="btn btn-remove">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p class="total-price">Total: @Model.Sum(item => item.Product.Price * item.Quantity)$</p>
+
+    <a href="/Cart/Checkout" class="btn btn-checkout">Valider la commande</a>
+}
+
+<style>
+    
+    .cart-table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+        .cart-table th, .cart-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-table th {
+            background-color: #f8f9fa;
+        }
+
+        .cart-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    
+    .quantity-input {
+        width: 60px;
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+        .quantity-input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+    
+    .btn {
+        padding: 6px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-update {
+        background-color: #ffc107;
+        color: white;
+    }
+
+        .btn-update:hover {
+            background-color: #e0a800;
+        }
+
+    .btn-remove {
+        background-color: #dc3545;
+        color: white;
+    }
+
+        .btn-remove:hover {
+            background-color: #c82333;
+        }
+
+    .btn-checkout {
+        display: inline-block;
+        margin-top: 20px;
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-checkout:hover {
+            background-color: #218838;
+        }
+
+    
+    .total-price {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+
+    h2 {
+        font-size: 2rem;
+        color: #333;
+    }
+</style>

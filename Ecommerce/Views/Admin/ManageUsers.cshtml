@@ -1,0 +1,49 @@
+﻿@model List<Ecommerce.Models.User>
+
+@{
+    var users = ViewBag.Users as List<Ecommerce.Models.User>; 
+}
+
+<div class="container mt-4 p-4 shadow rounded bg-light">
+    <h2 class="text-center mb-4">Manage Users</h2>
+
+    @if (users != null && users.Any()) 
+    {
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-primary">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in users)
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <span class="badge bg-@((user.Role == "Admin") ? "success" : "secondary")">
+                                @user.Role
+                            </span>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("EditUser", new { id = user.Id })" class="btn btn-warning btn-sm me-2">
+                                Edit
+                            </a>
+                            <form action="@Url.Action("DeleteUser", new { id = user.Id })" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">No users found.</div>
+    }
+</div>

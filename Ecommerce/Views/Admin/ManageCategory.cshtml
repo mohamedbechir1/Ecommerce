@@ -1,0 +1,241 @@
+﻿@{
+    ViewData["Title"] = "Manage Categories";
+}
+
+<div class="container mt-4">
+    
+
+    
+    <button class="btn btn-primary mb-3" id="addCategoryBtn">
+        <i class="fas fa-plus"></i> Add Category
+    </button>
+
+    
+    <div id="addCategoryForm" class="d-none">
+        <div class="overlay"></div> 
+
+        <div class="form-container">
+            <h3>Add New Category</h3>
+            <form method="post" asp-action="AddCategory" asp-controller="Admin">
+                <div class="form-group">
+                    <label for="Name">Category Name</label>
+                    <input type="text" class="form-control" id="Name" name="Name" required />
+                </div>
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-success">Add Category</button>
+                    <button type="button" class="btn btn-secondary" id="cancelAddCategory">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <div id="editCategoryForm" class="d-none">
+        <div class="overlay"></div>
+
+        <div class="form-container">
+            <h3>Edit Category</h3>
+            <form method="post" asp-action="EditCategory" asp-controller="Admin">
+                <input type="hidden" id="editCategoryId" name="Id" />
+                <div class="form-group">
+                    <label for="editName">Category Name</label>
+                    <input type="text" class="form-control" id="editName" name="Name" required />
+                </div>
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-success">Save Category</button>
+                    <button type="button" class="btn btn-secondary" id="cancelEditCategory">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    @if (ViewBag.Categories == null)
+    {
+        <p>No categories available.</p>
+    }
+    else
+    {
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <tr id="category-@category.Id">
+                        <td>@category.Id</td>
+                        <td>@category.Name</td>
+                        <td>
+                            
+                            <button class="btn btn-warning btn-sm" onclick="editCategory(@category.Id, '@category.Name')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+
+                            
+                            <form method="post" asp-action="DeleteCategory" asp-controller="Admin" asp-route-id="@category.Id" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+
+<script>
+    
+    document.getElementById("addCategoryBtn").addEventListener("click", function () {
+        document.getElementById("addCategoryForm").classList.remove("d-none");
+    });
+
+    
+    document.getElementById("cancelAddCategory").addEventListener("click", function () {
+        document.getElementById("addCategoryForm").classList.add("d-none");
+    });
+
+    
+    function editCategory(id, name) {
+        document.getElementById("editCategoryForm").classList.remove("d-none");
+        document.getElementById("editCategoryId").value = id;
+        document.getElementById("editName").value = name;
+    }
+
+    
+    document.getElementById("cancelEditCategory").addEventListener("click", function () {
+        document.getElementById("editCategoryForm").classList.add("d-none");
+    });
+</script>
+
+
+<style>
+    
+    .container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    
+    .form-container {
+        width: 100%;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+    
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        display: none;
+    }
+
+    .d-none {
+        display: none;
+    }
+
+    
+    table td button {
+        margin: 5px;
+        width: auto;
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    
+    .form-container {
+        max-width: 500px;
+        margin: 50px auto;
+    }
+
+    
+    button#cancelAddCategory, button#cancelEditCategory {
+        width: auto;
+        margin-left: 10px;
+    }
+</style>

@@ -1,0 +1,85 @@
+﻿@model Ecommerce.Models.Product
+
+<h2 class="edit-product-title">Edit Product</h2>
+
+<form asp-action="EditProduct" method="post" class="edit-product-form">
+    <div class="form-group">
+        <label for="Name">Product Name</label>
+        <input type="text" id="Name" name="Name" value="@Model.Name" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="Price">Price</label>
+        <input type="number" id="Price" name="Price" value="@Model.Price" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea id="Description" name="Description" class="form-control">@Model.Description</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        padding: 30px;
+    }
+
+    .edit-product-title {
+        text-align: center;
+        font-size: 2rem;
+        color: #343a40;
+        margin-bottom: 20px;
+    }
+
+    .edit-product-form {
+        max-width: 500px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #495057;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        transition: border-color 0.2s;
+    }
+
+        .form-control:focus {
+            border-color: #80bdff;
+            outline: none;
+        }
+
+    .btn-primary {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+</style>

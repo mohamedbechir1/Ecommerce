@@ -1,0 +1,224 @@
+﻿@using Ecommerce.Models
+@using Ecommerce.Models.ViewModels
+@model Ecommerce.Models.ViewModels.ProductCatalogViewModel
+
+<h2>Product Catalog</h2>
+
+
+<div class="mb-3">
+    <a href="@Url.Action("OrderHistory", "Order")" class="btn btn-secondary">View My Orders</a>
+</div>
+
+<form method="get">
+    <div class="form-row">
+        <div class="col">
+            <select name="category" class="form-control">
+                <option value="">All Categories</option>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div class="col">
+            <input type="number" name="minPrice" class="form-control" placeholder="Min Price" value="@Model.MinPrice" />
+        </div>
+        <div class="col">
+            <input type="number" name="maxPrice" class="form-control" placeholder="Max Price" value="@Model.MaxPrice" />
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    @foreach (var product in Model.Products)
+    {
+        <div class="col-md-4">
+            <div class="card">
+                <img src="@product.ImagePath" class="card-img-top" alt="@product.Name" />
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">@product.Description</p>
+                    <p class="card-text"><strong>@product.Price $</strong></p>
+                    <p class="card-text"><em>Category: @product.Category.Name</em></p>
+                    <a href="@Url.Action("Details", "Product", new { id = product.Id })" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Catalog", new { page = Model.CurrentPage - 1, category = Model.Category, minPrice = Model.MinPrice, maxPrice = Model.MaxPrice })">Previous</a>
+        </li>
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Catalog", new { page = i, category = Model.Category, minPrice = Model.MinPrice, maxPrice = Model.MaxPrice })">@i</a>
+            </li>
+        }
+        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action("Catalog", new { page = Model.CurrentPage + 1, category = Model.Category, minPrice = Model.MinPrice, maxPrice = Model.MaxPrice })">Next</a>
+        </li>
+    </ul>
+</nav>
+
+<style>
+    
+    .container {
+        margin-top: 30px;
+    }
+
+    h2 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .mb-3 {
+        margin-bottom: 20px;
+    }
+
+    
+    .form-row {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .form-row .col {
+            flex: 1;
+        }
+
+    .form-control {
+        font-size: 1rem;
+        padding: 10px;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    select.form-control {
+        padding-right: 35px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 10px 20px;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        padding: 10px 20px;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+
+    
+    .card {
+        margin-bottom: 20px;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-img-top {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+        .card-text strong {
+            color: #007bff;
+        }
+
+        .card-text em {
+            color: #6c757d;
+        }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
+    }
+
+        .pagination .page-item {
+            margin: 0 5px;
+        }
+
+        .pagination .page-link {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: #007bff;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+            .pagination .page-link:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+        .pagination .active .page-link {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .pagination .disabled .page-link {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+
+    
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+        .form-row .col {
+            flex: 1;
+            padding: 0 10px;
+        }
+
+    .card-columns {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+</style>

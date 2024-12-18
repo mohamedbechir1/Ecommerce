@@ -1,0 +1,72 @@
+﻿<div class="container mt-5">
+    <div class="card shadow-lg p-4" style="max-width: 500px; margin: auto; border-radius: 10px; border: none;">
+        <h2 class="text-center text-primary mb-4">Update Profile</h2>
+
+        @if (ViewBag.SuccessMessage != null)
+        {
+            <div class="alert alert-success text-center">
+                @ViewBag.SuccessMessage
+            </div>
+        }
+
+        <form method="post">
+            <div class="mb-3">
+                <label for="Name" class="form-label fw-bold">Name</label>
+                <input type="text" class="form-control form-control-lg" id="Name" name="Name" value="@Model.Name" required />
+            </div>
+            <div class="mb-3">
+                <label for="Email" class="form-label fw-bold">Email</label>
+                <input type="email" class="form-control form-control-lg" id="Email" name="Email" value="@Model.Email" required />
+            </div>
+            <div class="mb-3">
+                <label for="Password" class="form-label fw-bold">New Password</label>
+                <input type="password" class="form-control form-control-lg" id="Password" name="Password" placeholder="Leave empty to keep the current password" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">Update Profile</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    }
+
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+
+    .form-label {
+        color: #495057;
+    }
+
+    .form-control {
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        transition: all 0.3s;
+    }
+
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+            border-color: #0d6efd;
+        }
+
+    .btn-primary {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
+        }
+</style>
