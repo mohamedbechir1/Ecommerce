@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', credentialsId: 'GITHUB_TOKEN', url: 'https://github.com/mohamedbechir1/Ecommerce.git'
+                git branch: 'master', credentialsId: 'GITHUB_TOKEN', url: 'https://github.com/mohamedbechir1/Ecommerce.git'
             }
         }
 
