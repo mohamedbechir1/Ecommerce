@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    environment {
+        SNYK_TOKEN = credentials('SNYK_API_TOKEN')  // Load Snyk API token from Jenkins credentials
+        GITHUB_TOKEN = credentials('GITHUB_TOKEN')  // Load GitHub PAT if using HTTPS clone
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', credentialsId: 'GITHUB_TOKEN', url: 'https://github.com/mohamedbechir1/Ecommerce.git'
+            }
+        }
+
+        stage('Run Snyk Scan') {
+            steps {
+                sh 'docker run --rm -e SNYK_TOKEN=$SNYK_TOKEN -v $(pwd):/project snyk/snyk:alpine test --json > snyk_report.json'
+            }
+        }
+    }
+}
